@@ -131,12 +131,19 @@ export default function StandaloneReleaseModal({ isOpen, onClose }: StandaloneRe
           </div>
           <div className="flex items-center gap-2 shrink-0">
             <a
-              href="/api/export-bundle"
-              download="stratum-clinical-edge.tar.gz"
+              href="/api/export-bundle?format=zip"
+              download="stratum-clinical-edge.zip"
               className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs font-semibold shadow-xs transition-colors"
             >
               <Download className="w-3.5 h-3.5" />
-              Download Code (.tar.gz)
+              Download .ZIP (Windows)
+            </a>
+            <a
+              href="/api/export-bundle?format=tar.gz"
+              download="stratum-clinical-edge.tar.gz"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-stone-800 hover:bg-stone-900 text-stone-200 font-mono text-xs font-semibold shadow-xs transition-colors"
+            >
+              .tar.gz
             </a>
           </div>
         </div>
