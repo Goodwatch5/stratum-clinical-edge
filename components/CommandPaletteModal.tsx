@@ -21,6 +21,8 @@ import {
   Activity,
   FileText,
   Sliders,
+  Zap,
+  Compass,
 } from "lucide-react";
 
 export interface CommandItem {
