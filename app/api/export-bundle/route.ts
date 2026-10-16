@@ -3,8 +3,10 @@ import { execSync } from "child_process";
 
 export async function GET() {
   try {
-    // Generate clean archive stream directly from git HEAD
-    const buffer = execSync("git archive --format=tar.gz HEAD", { maxBuffer: 50 * 1024 * 1024 });
+    // Generate clean archive stream directly from git HEAD with dedicated folder wrapper
+    const buffer = execSync("git archive --format=tar.gz --prefix=stratum-clinical-edge/ HEAD", {
+      maxBuffer: 50 * 1024 * 1024,
+    });
 
     return new NextResponse(buffer, {
       status: 200,
