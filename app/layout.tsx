@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import PWAInstallBanner from "@/components/PWAInstallBanner";
 import "./globals.css";
 
@@ -56,6 +57,7 @@ export default function RootLayout({
       <body className="antialiased min-h-screen bg-[#FAF7F2] text-[#1a1a1a]">
         <PWAInstallBanner />
         {children}
+        <SpeedInsights />
       </body>
     </html>
   );
