@@ -121,6 +121,19 @@ export default function StandaloneReleaseModal({ isOpen, onClose }: StandaloneRe
           </button>
         </div>
 
+        {/* Zero-Secret Guarantee Banner */}
+        <div className="mx-6 mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-xs flex items-center justify-between">
+          <div className="flex items-center gap-2.5">
+            <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+            <div>
+              <span className="font-bold">Zero Secrets Required:</span> The entire application is 100% self-contained. Firebase client configuration is already bundled in the repo, and clinical AI features automatically execute via the local edge heuristic engine if you don&apos;t supply any API keys!
+            </div>
+          </div>
+          <span className="text-[10px] uppercase font-mono px-2 py-0.5 bg-emerald-100 rounded text-emerald-800 font-bold tracking-wider shrink-0 ml-3">
+            Plug &amp; Play
+          </span>
+        </div>
+
         {/* Tab Content Body */}
         <div className="p-6 overflow-y-auto space-y-5 text-sm">
           
@@ -130,7 +143,7 @@ export default function StandaloneReleaseModal({ isOpen, onClose }: StandaloneRe
               <div className="p-3 bg-amber-50/70 border border-amber-200/80 rounded-lg text-amber-900 text-xs flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                 <div>
-                  <strong>Recommended Path:</strong> Next.js runs natively on Vercel with zero infrastructure management, automatic SSL, edge caching, and serverless API execution.
+                  <strong>Zero-Config Deployment:</strong> Just push to GitHub, import to Vercel, and click <strong>Deploy</strong> without entering any secret keys or environment variables.
                 </div>
               </div>
 
@@ -167,7 +180,7 @@ git push -u origin main`}
                 <ol className="list-decimal list-inside space-y-1.5 text-xs text-stone-600">
                   <li>Visit <a href="https://vercel.com/new" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline font-medium inline-flex items-center gap-1">vercel.com/new <ExternalLink className="w-3 h-3" /></a> and authenticate.</li>
                   <li>Select your imported GitHub repository.</li>
-                  <li>In <strong>Environment Variables</strong>, add <code className="bg-stone-200 px-1 py-0.5 rounded text-stone-800">GEMINI_API_KEY</code> with your Google AI Studio API key.</li>
+                  <li>In <strong>Environment Variables</strong>, you can <strong>leave everything blank</strong>! The app is completely functional out of the box with zero secrets.</li>
                   <li>Click <strong>Deploy</strong>. Vercel compiles and publishes your app in ~60 seconds.</li>
                 </ol>
               </div>
@@ -320,9 +333,9 @@ npm run export:bundle`}
           {/* TAB 5: ENV VARIABLES */}
           {activeTab === "env" && (
             <div className="space-y-4">
-              <p className="text-xs text-stone-600">
-                All external settings can be supplied via environment variables in your hosting provider or in <code className="bg-stone-200 px-1 py-0.5 rounded text-stone-800">.env.local</code>:
-              </p>
+              <div className="p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-xs">
+                <strong>No secrets required!</strong> You do not need to configure any of these variables. Stratum Clinical Edge already bundles its client configurations and local heuristic AI models. These variables are strictly optional overrides if you ever want to connect your own custom accounts.
+              </div>
 
               <div className="relative group bg-[#1a1a1a] text-stone-100 p-3.5 rounded-lg font-mono text-xs overflow-x-auto">
                 <button
