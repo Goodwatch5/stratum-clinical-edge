@@ -122,16 +122,23 @@ export default function StandaloneReleaseModal({ isOpen, onClose }: StandaloneRe
         </div>
 
         {/* Zero-Secret Guarantee Banner */}
-        <div className="mx-6 mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-xs flex items-center justify-between">
+        <div className="mx-6 mt-4 p-3 bg-emerald-50 border border-emerald-200 rounded-lg text-emerald-900 text-xs flex flex-col sm:flex-row sm:items-center justify-between gap-3">
           <div className="flex items-center gap-2.5">
             <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
             <div>
-              <span className="font-bold">Zero Secrets Required:</span> The entire application is 100% self-contained. Firebase client configuration is already bundled in the repo, and clinical AI features automatically execute via the local edge heuristic engine if you don&apos;t supply any API keys!
+              <span className="font-bold">Zero Secrets Required:</span> The entire application is self-contained. Firebase configuration is bundled in the repo, and clinical AI features automatically run via the local edge heuristic engine.
             </div>
           </div>
-          <span className="text-[10px] uppercase font-mono px-2 py-0.5 bg-emerald-100 rounded text-emerald-800 font-bold tracking-wider shrink-0 ml-3">
-            Plug &amp; Play
-          </span>
+          <div className="flex items-center gap-2 shrink-0">
+            <a
+              href="/api/export-bundle"
+              download="stratum-clinical-edge.tar.gz"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded bg-emerald-700 hover:bg-emerald-800 text-white font-mono text-xs font-semibold shadow-xs transition-colors"
+            >
+              <Download className="w-3.5 h-3.5" />
+              Download Code (.tar.gz)
+            </a>
+          </div>
         </div>
 
         {/* Tab Content Body */}
@@ -143,20 +150,32 @@ export default function StandaloneReleaseModal({ isOpen, onClose }: StandaloneRe
               <div className="p-3 bg-amber-50/70 border border-amber-200/80 rounded-lg text-amber-900 text-xs flex items-start gap-2.5">
                 <CheckCircle2 className="w-4 h-4 text-amber-600 shrink-0 mt-0.5" />
                 <div>
-                  <strong>Zero-Config Deployment:</strong> Just push to GitHub, import to Vercel, and click <strong>Deploy</strong> without entering any secret keys or environment variables.
+                  <strong>Why was there a placeholder?</strong> GitHub does not automatically create repositories for private projects — you must first create a blank repository on your own GitHub account (takes 30 seconds).
                 </div>
               </div>
 
               <div className="space-y-3">
                 <h3 className="font-serif font-bold text-base text-stone-900">
-                  Step 1: Push to your GitHub Repository
+                  Step 1: Create your blank repository on GitHub
+                </h3>
+                <ol className="list-decimal list-inside space-y-1 text-xs text-stone-600">
+                  <li>Open <a href="https://github.com/new" target="_blank" rel="noopener noreferrer" className="text-blue-600 underline font-semibold inline-flex items-center gap-1">github.com/new <ExternalLink className="w-3 h-3" /></a></li>
+                  <li>Enter repository name: <code className="bg-stone-200 px-1 py-0.5 rounded text-stone-900 font-bold">stratum-clinical-edge</code></li>
+                  <li>Leave &ldquo;Add a README file&rdquo; <strong>unchecked</strong> (the repo already has one).</li>
+                  <li>Click <strong>Create repository</strong>. GitHub will give you your personal URL.</li>
+                </ol>
+              </div>
+
+              <div className="space-y-3 pt-2 border-t border-stone-200">
+                <h3 className="font-serif font-bold text-base text-stone-900">
+                  Step 2: Push your code
                 </h3>
                 <p className="text-xs text-stone-600">
-                  The local git repository is already initialized with a clean root commit. Connect it to your GitHub account:
+                  Copy and run this in your terminal (replace with your actual GitHub username):
                 </p>
                 <div className="relative group bg-[#1a1a1a] text-stone-100 p-3.5 rounded-lg font-mono text-xs overflow-x-auto">
                   <button
-                    onClick={() => handleCopy("git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git\ngit push -u origin main", "git-push")}
+                    onClick={() => handleCopy("git remote add origin https://github.com/<YOUR-USERNAME>/stratum-clinical-edge.git\ngit push -u origin main", "git-push")}
                     className="absolute top-2.5 right-2.5 p-1.5 rounded bg-stone-800 hover:bg-stone-700 text-stone-300 transition-colors flex items-center gap-1"
                     title="Copy commands"
                   >
@@ -164,10 +183,10 @@ export default function StandaloneReleaseModal({ isOpen, onClose }: StandaloneRe
                     <span className="text-[10px]">{copiedKey === "git-push" ? "Copied" : "Copy"}</span>
                   </button>
                   <pre className="text-stone-300 leading-relaxed">
-{`# Add your personal or organization repository remote:
-git remote add origin https://github.com/YOUR_USER/YOUR_REPO.git
+{`# 1. Connect to your new repository (use your GitHub username):
+git remote add origin https://github.com/<YOUR-USERNAME>/stratum-clinical-edge.git
 
-# Push the canonical branch:
+# 2. Push all code to main:
 git push -u origin main`}
                   </pre>
                 </div>
