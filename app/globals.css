@@ -1,0 +1,255 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    background-color: #FAF7F2;
+    color: #1a1a1a;
+  }
+}
+
+/* Custom refined scrollbars for the clinical interface */
+::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(26, 26, 26, 0.1);
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(26, 26, 26, 0.2);
+}
+
+/* Sovereign Obsidian Dark Mode Override Rules */
+.sovereign-dark,
+.clinical-dark {
+  background-color: #0d0e12 !important;
+  color: #e4e4e7 !important;
+}
+
+.sovereign-dark #stratum-global-root,
+.sovereign-dark #kingdom-root,
+.clinical-dark #stratum-global-root {
+  background-color: #0d0e12 !important;
+  color: #e4e4e7 !important;
+}
+
+/* Primary panels & containers (which had bg-white) */
+.sovereign-dark div.bg-white,
+.sovereign-dark section.bg-white,
+.sovereign-dark header.bg-white,
+.sovereign-dark aside.bg-white,
+.sovereign-dark main.bg-white,
+.sovereign-dark footer.bg-white,
+.clinical-dark div.bg-white,
+.clinical-dark section.bg-white,
+.clinical-dark header.bg-white,
+.clinical-dark footer.bg-white {
+  background-color: #14161d !important;
+  color: #e4e4e7 !important;
+  border-color: rgba(197, 162, 125, 0.18) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* Secondary areas & canvas boxes (which had bg-[#FAF7F2]) */
+.sovereign-dark div.bg-\[\#FAF7F2\],
+.sovereign-dark section.bg-\[\#FAF7F2\],
+.sovereign-dark aside.bg-\[\#FAF7F2\],
+.sovereign-dark span.bg-\[\#FAF7F2\],
+.sovereign-dark select.bg-\[\#FAF7F2\],
+.sovereign-dark div.bg-neutral-50,
+.sovereign-dark section.bg-neutral-50,
+.clinical-dark div.bg-\[\#FAF7F2\],
+.clinical-dark section.bg-\[\#FAF7F2\],
+.clinical-dark span.bg-\[\#FAF7F2\],
+.clinical-dark select.bg-\[\#FAF7F2\],
+.clinical-dark div.bg-neutral-50,
+.clinical-dark section.bg-neutral-50 {
+  background-color: #101217 !important;
+  color: #e4e4e7 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Header blur bar */
+.sovereign-dark header.bg-\[\#FAF7F2\]\/90 {
+  background-color: rgba(13, 14, 18, 0.92) !important;
+  border-bottom-color: rgba(197, 162, 125, 0.22) !important;
+}
+
+/* Form inputs & interactive widgets */
+.sovereign-dark input,
+.sovereign-dark textarea,
+.sovereign-dark select,
+.clinical-dark input,
+.clinical-dark textarea,
+.clinical-dark select {
+  background-color: #181b24 !important;
+  color: #f4f4f5 !important;
+  border-color: rgba(255, 255, 255, 0.18) !important;
+}
+
+.sovereign-dark input:focus,
+.sovereign-dark textarea:focus,
+.sovereign-dark select:focus {
+  border-color: #c5a27d !important;
+  box-shadow: 0 0 0 1px rgba(197, 162, 125, 0.35) !important;
+}
+
+.sovereign-dark input::placeholder,
+.sovereign-dark textarea::placeholder,
+.clinical-dark input::placeholder,
+.clinical-dark textarea::placeholder {
+  color: #71717a !important;
+}
+
+/* Inner borders and line markers */
+.sovereign-dark .border,
+.sovereign-dark .border-b,
+.sovereign-dark .border-t,
+.sovereign-dark .border-r,
+.sovereign-dark .border-l,
+.clinical-dark .border,
+.clinical-dark .border-b,
+.clinical-dark .border-t,
+.clinical-dark .border-r,
+.clinical-dark .border-l {
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.sovereign-dark .border-\[\#1a1a1a\]\/15,
+.sovereign-dark .border-\[\#1a1a1a\]\/20,
+.sovereign-dark .border-\[\#1a1a1a\]\/10,
+.sovereign-dark .border-\[\#1a1a1a\] {
+  border-color: rgba(255, 255, 255, 0.14) !important;
+}
+
+/* Muted secondary texts */
+.sovereign-dark .text-neutral-500,
+.sovereign-dark .text-neutral-600,
+.clinical-dark .text-neutral-500,
+.clinical-dark .text-neutral-600 {
+  color: #9496a1 !important;
+}
+
+.sovereign-dark .text-neutral-400,
+.clinical-dark .text-neutral-400 {
+  color: #71717a !important;
+}
+
+.sovereign-dark .text-neutral-700,
+.sovereign-dark .text-neutral-800,
+.sovereign-dark .text-\[\#1a1a1a\],
+.clinical-dark .text-neutral-700,
+.clinical-dark .text-neutral-800 {
+  color: #e4e4e7 !important;
+}
+
+/* Specific heading states */
+.sovereign-dark h1,
+.sovereign-dark h2,
+.sovereign-dark h3,
+.sovereign-dark h4,
+.clinical-dark h1,
+.clinical-dark h2,
+.clinical-dark h3,
+.clinical-dark h4 {
+  color: #f4f4f5 !important;
+}
+
+/* Interactive elements / clinical hover states */
+.sovereign-dark button.bg-\[\#FAF7F2\],
+.sovereign-dark button.bg-white,
+.clinical-dark button.bg-\[\#FAF7F2\],
+.clinical-dark button.bg-white {
+  background-color: #1a1d26 !important;
+  color: #e4e4e7 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+}
+
+.sovereign-dark button.bg-\[\#FAF7F2\]:hover,
+.sovereign-dark button.bg-white:hover,
+.clinical-dark button.bg-\[\#FAF7F2\]:hover,
+.clinical-dark button.bg-white:hover {
+  background-color: #222633 !important;
+  color: #f4f4f5 !important;
+  border-color: #c5a27d !important;
+}
+
+/* Primary dark action buttons (which had bg-[#1a1a1a]) */
+.sovereign-dark button.bg-\[\#1a1a1a\],
+.sovereign-dark .bg-\[\#1a1a1a\] {
+  background-color: #1b1e28 !important;
+  border-color: rgba(197, 162, 125, 0.4) !important;
+}
+
+.sovereign-dark button.bg-\[\#1a1a1a\]:hover {
+  background-color: #c5a27d !important;
+  color: #0d0e12 !important;
+}
+
+/* Sudoku / Cipher Grid in dark mode */
+.sovereign-dark .grid-cols-9 input {
+  color: #f4f4f5 !important;
+}
+
+.sovereign-dark .grid-cols-9 input:focus {
+  background-color: #242938 !important;
+}
+
+/* Alert Boxes and Diagnostic synthesis panels */
+.sovereign-dark .bg-emerald-50,
+.clinical-dark .bg-emerald-50 {
+  background-color: rgba(16, 185, 129, 0.09) !important;
+  color: #34d399 !important;
+  border-color: rgba(16, 185, 129, 0.25) !important;
+}
+
+.sovereign-dark .bg-red-50,
+.clinical-dark .bg-red-50 {
+  background-color: rgba(239, 68, 68, 0.09) !important;
+  color: #f87171 !important;
+  border-color: rgba(239, 68, 68, 0.25) !important;
+}
+
+.sovereign-dark .bg-blue-50,
+.clinical-dark .bg-blue-50 {
+  background-color: rgba(59, 130, 246, 0.09) !important;
+  color: #60a5fa !important;
+  border-color: rgba(59, 130, 246, 0.25) !important;
+}
+
+/* Custom scrollbars in Dark Theme */
+.sovereign-dark ::-webkit-scrollbar-thumb,
+.clinical-dark ::-webkit-scrollbar-thumb {
+  background: rgba(197, 162, 125, 0.25) !important;
+}
+
+.sovereign-dark ::-webkit-scrollbar-thumb:hover,
+.clinical-dark ::-webkit-scrollbar-thumb:hover {
+  background: rgba(197, 162, 125, 0.45) !important;
+}
+
+/* Print Optimization for Sovereign Patient Pocket Care Cards & Field Packing Manifests */
+@media print {
+  header,
+  aside,
+  #hero-human-reality-btn,
+  nav,
+  .no-print {
+    display: none !important;
+  }
+  body,
+  main {
+    background: white !important;
+    color: #1a1a1a !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+}
+
