@@ -29,6 +29,7 @@ import { ALL_20_POCKETS, PocketService } from "./SolarNexus/ServicesRegistry20";
 import VideoHoverCard from "./VideoHoverCard";
 import VideoTheaterModal, { VideoData } from "./VideoTheaterModal";
 import { ECOSYSTEM_VIDEOS, ALL_PLAYLIST_VIDEOS } from "@/lib/videoRegistry";
+import type { AppTab } from "@/lib/navigation";
 
 const POCKET_VIDEO_MAP: Record<number, string> = {
   1: "clinical-telemetry",
@@ -41,7 +42,7 @@ const POCKET_VIDEO_MAP: Record<number, string> = {
 
 interface PocketStatusMatrixProps {
   onSelectPocket?: (pocketId: number) => void;
-  onNavigateTab?: (tabName: string) => void;
+  onNavigateTab?: (tabName: AppTab) => void;
   isDark?: boolean;
 }
 
@@ -162,7 +163,7 @@ export default function PocketStatusMatrix({
           </span>
           {onNavigateTab && (
             <button
-              onClick={() => onNavigateTab("seventeen-pockets")}
+              onClick={() => onNavigateTab("topology")}
               className="text-[#c5a27d] hover:underline font-bold flex items-center gap-1"
             >
               <span>Ecosystem Topology</span>

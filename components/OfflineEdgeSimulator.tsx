@@ -134,7 +134,6 @@ export default function OfflineEdgeSimulator({
       collectionName: "patients",
       docId: updatedRecord.id,
       payload: updatedRecord,
-      timestamp: Date.now(),
     });
 
     // 3. Update parent state

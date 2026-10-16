@@ -24,6 +24,7 @@ import {
   Zap,
   Compass,
 } from "lucide-react";
+import type { AppTab } from "@/lib/navigation";
 
 export interface CommandItem {
   id: string;
@@ -40,7 +41,7 @@ export interface CommandItem {
 interface CommandPaletteModalProps {
   isOpen: boolean;
   onClose: () => void;
-  onNavigateTab: (tab: string) => void;
+  onNavigateTab: (tab: AppTab) => void;
   onForceSync?: () => void;
   onToggleAirGap?: () => void;
   onOpenSecurityModal?: () => void;

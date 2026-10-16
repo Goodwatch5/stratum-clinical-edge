@@ -22,6 +22,7 @@ import {
   clearSyncQueue,
   flushSyncQueue,
 } from "@/lib/indexedDB";
+import type { AppTab } from "@/lib/navigation";
 import {
   registerBackgroundSync,
   requestPersistentStorage,
@@ -260,33 +261,7 @@ export default function KingdomDashboard() {
   const [strongholds, setStrongholds] = useState<Stronghold[]>(baselineStrongholds);
   const [selectedId, setSelectedId] = useState<string>("K-AETHEL-01");
   const [searchFilter, setSearchFilter] = useState<string>("");
-  const [activeTab, setActiveTab] = useState<
-    | "strongholds"
-    | "command-center"
-    | "war-room"
-    | "map"
-    | "provisions"
-    | "topology"
-    | "logs"
-    | "cipher"
-    | "agent-bridge"
-    | "idv"
-    | "triage"
-    | "dispatch"
-    | "growth-marketing"
-    | "human-reality"
-    | "solar-nexus"
-    | "gitlab-builds"
-    | "mesh-telemetry"
-    | "air-gap-sim"
-    | "dossier-suite"
-    | "voice-scribe"
-    | "entertainment"
-    | "sprint"
-    | "stripe-apps"
-    | "ecosystem-scorecard"
-    | "pocket-matrix"
-  >("strongholds");
+  const [activeTab, setActiveTab] = useState<AppTab>("strongholds");
   const [isAirGapActive, setIsAirGapActive] = useState<boolean>(false);
   const [displayMode, setDisplayMode] = useState<DisplayMode>("showcase");
 
@@ -311,6 +286,15 @@ export default function KingdomDashboard() {
     "[00:00:02 UTC] IndexedDB Local Vault initialized with zero-latency read/write replication.",
     "[00:00:03 UTC] Active Developer Sandbox link operational on port 3000.",
   ]);
+  const persistCouncilLog = useCallback(
+    (logText: string) =>
+      saveLogToIDB({
+        id: `LOG-${crypto.randomUUID()}`,
+        logText,
+        ownerId: firebaseUser?.uid,
+      }),
+    [firebaseUser?.uid]
+  );
   const [newLogInput, setNewLogInput] = useState<string>("");
   const [isPipelineRunning, setIsPipelineRunning] = useState<boolean>(false);
 
@@ -1894,7 +1878,7 @@ export default function KingdomDashboard() {
               <EcosystemMaturitySuite
                 currentMode={displayMode}
                 onChangeMode={setDisplayMode}
-                onNavigateTab={(tab) => setActiveTab(tab as any)}
+                onNavigateTab={setActiveTab}
                 isDark={isDarkMode}
               />
             </ErrorBoundary>
@@ -1902,7 +1886,7 @@ export default function KingdomDashboard() {
 
           {/* BUILD & DEPLOYMENT HEALTH STATUS DECK */}
           <BuildDeploymentHealthCards
-            onNavigateTab={(tab) => setActiveTab(tab as any)}
+            onNavigateTab={setActiveTab}
             onRefresh={() => showToast("CI/CD pipeline and Cloud Run edge health verified.", "success")}
             isDark={isDarkMode}
           />
@@ -2261,7 +2245,7 @@ export default function KingdomDashboard() {
               {/* INTEGRATED POCKET STATUS MATRIX (01 - 20) */}
               <ErrorBoundary moduleTitle="Universal Pocket Status Matrix">
                 <PocketStatusMatrix
-                  onNavigateTab={(tab) => setActiveTab(tab as any)}
+                  onNavigateTab={setActiveTab}
                   isDark={isDarkMode}
                 />
               </ErrorBoundary>
@@ -2611,7 +2595,7 @@ export default function KingdomDashboard() {
                   lastSyncTime={lastSyncTime || "Just now"}
                   onForceSync={handleForceSyncNow}
                   isSyncing={isSyncingState}
-                  onNavigateTab={(tab) => setActiveTab(tab as any)}
+                  onNavigateTab={setActiveTab}
                   onOpenCommandPalette={() => setShowCommandPalette(true)}
                   runInBackgroundWhenClosed={runInBackgroundWhenClosed}
                   onToggleRunInBackground={(enabled) => {
@@ -2787,7 +2771,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                     addToast("Autonomous care continuity protocol dispatched to council stream", "success");
                   }}
                 />
@@ -2805,7 +2789,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                     addToast("ABCD Field Advisory published to Council Decrees stream", "success");
                   }}
                 />
@@ -2823,7 +2807,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                     showToast(msg, "info");
                   }}
                 />
@@ -2842,7 +2826,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                     showToast(msg, "success");
                   }}
                 />
@@ -2890,7 +2874,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                     showToast(msg, "info");
                   }}
                   isDark={isDarkMode}
@@ -2929,7 +2913,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                   }}
                   onShowToast={showToast}
                   isDark={isDarkMode}
@@ -2966,7 +2950,7 @@ export default function KingdomDashboard() {
                     const time = new Date().toISOString().replace("T", " ").substring(11, 19);
                     const formatted = `[${time} UTC] ${msg}`;
                     setCouncilLogs((prev) => [formatted, ...prev]);
-                    saveLogToIDB(formatted).catch(console.warn);
+                    persistCouncilLog(formatted).catch(console.warn);
                   }}
                 />
               </ErrorBoundary>
@@ -2980,7 +2964,7 @@ export default function KingdomDashboard() {
                 <EcosystemMaturitySuite
                   currentMode={displayMode}
                   onChangeMode={setDisplayMode}
-                  onNavigateTab={(tab) => setActiveTab(tab as any)}
+                  onNavigateTab={setActiveTab}
                   isDark={isDarkMode}
                 />
               </ErrorBoundary>
@@ -2992,7 +2976,7 @@ export default function KingdomDashboard() {
             <div className="space-y-6">
               <ErrorBoundary moduleTitle="Universal Pocket Operations Matrix (01 - 20)">
                 <PocketStatusMatrix
-                  onNavigateTab={(tab) => setActiveTab(tab as any)}
+                  onNavigateTab={setActiveTab}
                   isDark={isDarkMode}
                 />
               </ErrorBoundary>
@@ -3237,7 +3221,7 @@ export default function KingdomDashboard() {
       <CommandPaletteModal
         isOpen={showCommandPalette}
         onClose={() => setShowCommandPalette(false)}
-        onNavigateTab={(t) => setActiveTab(t)}
+        onNavigateTab={setActiveTab}
         onForceSync={handleForceSyncNow}
         onToggleAirGap={() => setIsAirGapActive((prev) => !prev)}
         onOpenReleaseModal={() => setShowReleaseModal(true)}

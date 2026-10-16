@@ -18,9 +18,10 @@ import {
   Zap,
   RotateCcw,
 } from "lucide-react";
+import type { AppTab } from "@/lib/navigation";
 
 interface BuildDeploymentHealthCardsProps {
-  onNavigateTab?: (tabName: string) => void;
+  onNavigateTab?: (tabName: AppTab) => void;
   onRefresh?: () => void;
   isDark?: boolean;
 }
@@ -147,7 +148,7 @@ export default function BuildDeploymentHealthCards({
           <span>Sync: {lastCheckTime}</span>
           {onNavigateTab && (
             <button
-              onClick={() => onNavigateTab("seventeen-pockets")}
+              onClick={() => onNavigateTab("topology")}
               className="text-[#c5a27d] hover:underline font-bold flex items-center gap-0.5"
             >
               <span>Ecosystem Map</span>

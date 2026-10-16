@@ -103,7 +103,7 @@ export async function generateClinicalResponse(
   userPrompt: string,
   options: {
     timeoutMs?: number;
-    mode?: "diagnostic" | "strategy" | "triage_sentiment" | "abcd_dispatch" | "growth_marketing" | "human_reality_encounter";
+    mode?: "diagnostic" | "strategy" | "triage_sentiment" | "abcd_dispatch" | "growth_marketing" | "human_reality_encounter" | "agent_collaborate";
   } = {}
 ): Promise<ClinicalAiResponse> {
   const startTime = Date.now();

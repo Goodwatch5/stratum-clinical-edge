@@ -34,13 +34,14 @@ import {
   Radio,
   Database,
 } from "lucide-react";
+import type { AppTab } from "@/lib/navigation";
 
 export type DisplayMode = "showcase" | "simulation" | "production";
 
 interface EcosystemMaturitySuiteProps {
   currentMode: DisplayMode;
   onChangeMode: (mode: DisplayMode) => void;
-  onNavigateTab?: (tabName: string) => void;
+  onNavigateTab?: (tabName: AppTab) => void;
   isDark?: boolean;
 }
 

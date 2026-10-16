@@ -37,9 +37,11 @@ import {
   HardDrive,
   Lock,
   Sun,
+  HeartPulse,
 } from "lucide-react";
 import KingdomIntelligenceCore from "@/components/KingdomIntelligenceCore";
 import { Stronghold } from "@/app/page";
+import type { AppTab } from "@/lib/navigation";
 import { generateStrongholdFhirBundle, downloadJsonFile } from "@/lib/fhir";
 import VideoHoverCard from "./VideoHoverCard";
 import VideoTheaterModal, { VideoData } from "./VideoTheaterModal";
@@ -60,7 +62,7 @@ interface ClinicalCommandCenterProps {
   lastSyncTime?: string;
   onForceSync?: () => Promise<void>;
   isSyncing?: boolean;
-  onNavigateTab?: (tab: string) => void;
+  onNavigateTab?: (tab: AppTab) => void;
   onOpenCommandPalette?: () => void;
   runInBackgroundWhenClosed?: boolean;
   onToggleRunInBackground?: (enabled: boolean) => void;
@@ -301,7 +303,7 @@ export default function ClinicalCommandCenter({
 
         {/* 5 Journey Outcome Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {[
+          {([
             {
               title: "Use AI & Reasoning",
               desc: "DeepAgent multi-agent orchestration, clinical analysis, Groq reasoning",
@@ -342,7 +344,7 @@ export default function ClinicalCommandCenter({
               tab: "pocket-matrix",
               icon: Cpu,
             },
-          ].map((journey) => {
+          ] as const).map((journey) => {
             const Icon = journey.icon;
             return (
               <div
