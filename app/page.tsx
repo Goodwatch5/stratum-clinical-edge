@@ -103,6 +103,7 @@ import {
   Sliders,
   CheckCircle2,
   HardDrive,
+  Cloud,
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { downloadCSV } from "@/lib/csvExporter";
@@ -113,6 +114,7 @@ import ProvisionsTracker from "@/components/ProvisionsTracker";
 import PlatformInstructions from "@/components/PlatformInstructions";
 import AgentBridgeInterface from "@/components/AgentBridgeInterface";
 import BackupRestoreModal from "@/components/BackupRestoreModal";
+import StandaloneReleaseModal from "@/components/StandaloneReleaseModal";
 import StrategicRadarMap from "@/components/StrategicRadarMap";
 import IsolatedDataVault from "@/components/IsolatedDataVault";
 import AutonomousUrgencyScorer from "@/components/AutonomousUrgencyScorer";
@@ -316,6 +318,7 @@ export default function KingdomDashboard() {
   const [showAddStronghold, setShowAddStronghold] = useState<boolean>(false);
   const [showRestoreModal, setShowRestoreModal] = useState<boolean>(false);
   const [showBrandShowcaseModal, setShowBrandShowcaseModal] = useState<boolean>(false);
+  const [showReleaseModal, setShowReleaseModal] = useState<boolean>(false);
   const [selectedCinemaVideo, setSelectedCinemaVideo] = useState<VideoData | null>(null);
   const [showVideoTheaterModal, setShowVideoTheaterModal] = useState<boolean>(false);
   const [strongholdViewMode, setStrongholdViewMode] = useState<"chart" | "radar">("chart");
@@ -1258,6 +1261,19 @@ export default function KingdomDashboard() {
             </span>
             <span className="text-[9px] font-mono text-emerald-700 bg-emerald-50 px-1 py-0.2 border border-emerald-300 hidden lg:inline font-bold">
               20 POCKETS LIVE
+            </span>
+          </button>
+
+          {/* Standalone Release & External Deployment Button */}
+          <button
+            id="open-release-modal-btn"
+            onClick={() => setShowReleaseModal(true)}
+            className="flex items-center space-x-1.5 px-2.5 py-1.5 bg-[#FAF7F2] border border-[#c5a27d] hover:bg-[#c5a27d]/15 text-xs font-mono text-[#1a1a1a] transition-all shadow-sm group"
+            title="Release & Standalone Deployment Guide (GitHub, Vercel, Docker, VPS, Cloud Run)"
+          >
+            <Cloud className="w-3.5 h-3.5 text-[#c5a27d]" />
+            <span className="text-[10px] font-bold tracking-wider text-stone-900 hidden sm:inline">
+              RELEASE / DEPLOY
             </span>
           </button>
 
@@ -3209,6 +3225,22 @@ export default function KingdomDashboard() {
         isOpen={showRestoreModal}
         onClose={() => setShowRestoreModal(false)}
         onRestore={handleRestoreBackup}
+      />
+
+      {/* MODAL: STANDALONE RELEASE & EXTERNAL DEPLOYMENT */}
+      <StandaloneReleaseModal
+        isOpen={showReleaseModal}
+        onClose={() => setShowReleaseModal(false)}
+      />
+
+      {/* MODAL: UNIVERSAL COMMAND PALETTE */}
+      <CommandPaletteModal
+        isOpen={showCommandPalette}
+        onClose={() => setShowCommandPalette(false)}
+        onNavigateTab={(t) => setActiveTab(t)}
+        onForceSync={handleForceSyncNow}
+        onToggleAirGap={() => setIsAirGapActive((prev) => !prev)}
+        onOpenReleaseModal={() => setShowReleaseModal(true)}
       />
     </div>
   );

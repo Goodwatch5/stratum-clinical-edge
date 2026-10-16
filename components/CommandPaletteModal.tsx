@@ -44,6 +44,7 @@ interface CommandPaletteModalProps {
   onOpenSecurityModal?: () => void;
   onOpenEvolutionModal?: () => void;
   onOpenCinemaVideo?: () => void;
+  onOpenReleaseModal?: () => void;
 }
 
 export default function CommandPaletteModal({
@@ -55,6 +56,7 @@ export default function CommandPaletteModal({
   onOpenSecurityModal,
   onOpenEvolutionModal,
   onOpenCinemaVideo,
+  onOpenReleaseModal,
 }: CommandPaletteModalProps) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -359,6 +361,20 @@ export default function CommandPaletteModal({
         onClose();
       },
       keywords: ["video", "cinema", "theater", "hardware", "keynote", "stream", "reel"],
+    },
+    {
+      id: "action-release-deploy",
+      title: "Release & Standalone Deployment Manual",
+      subtitle: "Deploy externally to Vercel, Docker, Google Cloud Run, VPS, or self-hosted server",
+      category: "Operations & Actions",
+      badge: "RELEASE",
+      badgeColor: "bg-amber-100 text-amber-900",
+      icon: ExternalLink,
+      action: () => {
+        if (onOpenReleaseModal) onOpenReleaseModal();
+        onClose();
+      },
+      keywords: ["release", "deploy", "export", "github", "vercel", "docker", "vps", "cloud run", "standalone"],
     },
   ];
 
