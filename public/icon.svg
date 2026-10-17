@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <rect width="512" height="512" rx="96" fill="#1a1a1a"/>
+  <!-- Gold Border Accent -->
+  <rect x="24" y="24" width="464" height="464" rx="72" fill="none" stroke="#c5a27d" stroke-width="12" stroke-opacity="0.8"/>
+  
+  <!-- Central Emblem: Crown + Clinical Edge Shield -->
+  <g transform="translate(106, 106) scale(0.585)">
+    <!-- Shield Outline -->
+    <path d="M 256 40 L 440 100 C 440 280 256 460 256 460 C 256 460 72 280 72 100 Z" fill="#24252b" stroke="#c5a27d" stroke-width="16" stroke-linejoin="round"/>
+    
+    <!-- Clinical Cross in Shield -->
+    <path d="M 224 160 H 288 V 224 H 352 V 288 H 288 V 352 H 224 V 288 H 160 V 224 H 224 Z" fill="#c5a27d"/>
+    
+    <!-- Crown Finials above Shield -->
+    <path d="M 120 70 L 160 120 L 256 40 L 352 120 L 392 70 L 370 140 H 142 Z" fill="#FAF7F2" stroke="#c5a27d" stroke-width="8"/>
+  </g>
+  
+  <!-- Subtle Typography Label -->
+  <text x="256" y="445" font-family="serif" font-size="34" font-weight="bold" fill="#FAF7F2" text-anchor="middle" letter-spacing="4">STRATUM</text>
+  <text x="256" y="475" font-family="monospace" font-size="18" fill="#c5a27d" text-anchor="middle" letter-spacing="3">CLINICAL EDGE</text>
+</svg>
