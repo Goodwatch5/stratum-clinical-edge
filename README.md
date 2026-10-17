@@ -62,7 +62,7 @@
 - **Canonical Codebase**: Single authoritative source of truth for Stratum Clinical Edge.
 - **GitLab CI/CD**: Evaluates regional telemetry, sovereign offline vault validation, and zero-trust perimeter checks via `.gitlab-ci.yml`.
 - **GitHub CI**: Validates ESLint compliance, Next.js production compilations, and packages multi-arch Docker images to GitHub Container Registry (`ghcr.io`).
-- **Google Cloud Production**: Deployed automatically to Cloud Run with Port 3000 mapping, cold-start mitigation, and live health probing.
+- **Google Cloud Production**: Cloud Run deployment is not currently configured. The GitHub workflow publishes a container image to GHCR; deployment requires a separately configured Cloud Run target and deployment credentials.
 
 ---
 

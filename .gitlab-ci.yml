@@ -17,7 +17,7 @@ stages:
   - install
   - test
   - build
-  - edge-deploy
+  - edge-status
 
 install_dependencies:
   stage: install
@@ -48,10 +48,10 @@ build_application:
   rules:
     - if: $CI_COMMIT_BRANCH == "main" || $CI_PIPELINE_SOURCE == "merge_request_event"
 
-sovereign_edge_deploy:
-  stage: edge-deploy
+sovereign_edge_status:
+  stage: edge-status
   needs: ["build_application"]
   script:
-    - echo "Deploying canonical build to Google Cloud Run (us-west2)..."
+    - echo "Cloud Run deployment is not configured; this job only reports status."
   rules:
     - if: $CI_COMMIT_BRANCH == "main"
