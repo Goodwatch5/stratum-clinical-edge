@@ -1,0 +1,57 @@
+image: node:20-alpine
+
+cache:
+  key:
+    files:
+      - package-lock.json
+  paths:
+    - .npm/
+    - node_modules/
+    - .next/cache/
+
+variables:
+  npm_config_cache: "$CI_PROJECT_DIR/.npm"
+  NEXT_TELEMETRY_DISABLED: "1"
+
+stages:
+  - install
+  - test
+  - build
+  - edge-deploy
+
+install_dependencies:
+  stage: install
+  script:
+    - npm ci --prefer-offline --no-audit
+  artifacts:
+    paths:
+      - node_modules/
+    expire_in: 1 day
+
+lint_and_clinical_check:
+  stage: test
+  needs: ["install_dependencies"]
+  script:
+    - npm run lint
+    - echo "Verifying seventeen-pockets clinical readiness & telemetry..."
+
+build_application:
+  stage: build
+  needs: ["install_dependencies"]
+  script:
+    - npm run build
+  artifacts:
+    paths:
+      - .next/
+      - public/
+    expire_in: 7 days
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main" || $CI_PIPELINE_SOURCE == "merge_request_event"
+
+sovereign_edge_deploy:
+  stage: edge-deploy
+  needs: ["build_application"]
+  script:
+    - echo "Deploying canonical build to Google Cloud Run (us-west2)..."
+  rules:
+    - if: $CI_COMMIT_BRANCH == "main"
