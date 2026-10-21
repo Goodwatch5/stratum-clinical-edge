@@ -1,0 +1,85 @@
+{
+  "entities": {
+    "patient": {
+      "title": "Patient Record",
+      "description": "Patient clinical biological baseline tracking details.",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Standard identifier for patient, e.g. PA-XXX"
+        },
+        "name": {
+          "type": "string",
+          "description": "Full name of the patient."
+        },
+        "age": {
+          "type": "integer",
+          "description": "Age of the patient."
+        },
+        "vitals": {
+          "type": "string",
+          "description": "Comma-separated or formatted clinical vitals string representation."
+        },
+        "notes": {
+          "type": "string",
+          "description": "Textual clinical notes or observation logs. Is strictly confidential."
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "Firebase Authentication User ID representing the owner/creator clinician."
+        },
+        "lat": {
+          "type": "number",
+          "description": "Geolocational latitude of the patient cohort location."
+        },
+        "lon": {
+          "type": "number",
+          "description": "Geolocational longitude of the patient cohort location."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firebase ServerTimestamp recorded at initial composition."
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "Firebase ServerTimestamp updated at modifications."
+        }
+      },
+      "required": ["id", "name", "age", "vitals", "notes", "ownerId", "createdAt", "updatedAt", "lat", "lon"]
+    },
+    "auditLog": {
+      "title": "Clinical Audit Log",
+      "description": "Confidential activity log entries generated inside Stratum Workspace runner.",
+      "type": "object",
+      "properties": {
+        "logText": {
+          "type": "string",
+          "description": "Text formatting representing standard trace or GitLab orchestration messages."
+        },
+        "ownerId": {
+          "type": "string",
+          "description": "The UID of the clinician executing operations or receiving the log stream."
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time",
+          "description": "ServerTimestamp identifying the precise event timeline."
+        }
+      },
+      "required": ["logText", "ownerId", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/patients/{patientId}": {
+      "schema": "patient",
+      "description": "Secure access to patient biomarker histories, keyed by unique generated ID."
+    },
+    "/logs/{logId}": {
+      "schema": "auditLog",
+      "description": "Internal developer runner outputs and clinician audit trails synchronized to Firestore database."
+    }
+  }
+}

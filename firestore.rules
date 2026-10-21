@@ -1,0 +1,100 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // 1. Global Safety Net - Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // 2. Reusable global helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isVerifiedUser() {
+      return isSignedIn();
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // 3. Entity-specific validation helpers to avoid "Update-Gaps"
+    function isValidPatient(data) {
+      return data.keys().hasAll(['id', 'name', 'age', 'vitals', 'notes', 'ownerId', 'createdAt', 'updatedAt', 'lat', 'lon'])
+        && data.keys().size() == 10
+        && data.id is string && data.id.size() <= 128
+        && data.name is string && data.name.size() <= 128
+        && data.age is int && data.age >= 0 && data.age <= 150
+        && data.vitals is string && data.vitals.size() <= 2000
+        && data.notes is string && data.notes.size() <= 10000
+        && data.ownerId is string && data.ownerId.size() <= 128 && data.ownerId == request.auth.uid
+        && (data.lat is float || data.lat is int) && data.lat >= -90.0 && data.lat <= 90.0
+        && (data.lon is float || data.lon is int) && data.lon >= -180.0 && data.lon <= 180.0
+        && data.createdAt is timestamp
+        && data.updatedAt is timestamp;
+    }
+
+    function isValidLog(data) {
+      return data.keys().hasAll(['logText', 'ownerId', 'createdAt'])
+        && data.keys().size() == 3
+        && data.logText is string && data.logText.size() <= 10000
+        && data.ownerId is string && data.ownerId.size() <= 128 && data.ownerId == request.auth.uid
+        && data.createdAt is timestamp;
+    }
+
+    // 4. Secure Collections Match Blocks
+    match /patients/{patientId} {
+      // Single-document target ID guard applied only on targeted ops (create/get/update/delete)
+      allow get: if isSignedIn() && isValidId(patientId) && existing().ownerId == request.auth.uid;
+      
+      // List query protection - enforces relational query filter on resource properties instead of empty isSignedIn read
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+
+      allow create: if isVerifiedUser() 
+        && isValidId(patientId) 
+        && isValidPatient(incoming()) 
+        && incoming().createdAt == request.time
+        && incoming().updatedAt == request.time;
+
+      allow update: if isVerifiedUser() 
+        && isValidId(patientId)
+        && isValidPatient(incoming())
+        && incoming().ownerId == existing().ownerId
+        && incoming().createdAt == existing().createdAt
+        && (
+          incoming().diff(existing()).affectedKeys().hasOnly(['lat', 'lon'])
+          || (
+            incoming().diff(existing()).affectedKeys().hasOnly(['name', 'age', 'vitals', 'notes', 'lat', 'lon', 'updatedAt'])
+            && incoming().updatedAt == request.time
+          )
+        );
+
+      allow delete: if isVerifiedUser() && isValidId(patientId) && existing().ownerId == request.auth.uid;
+    }
+
+    match /logs/{logId} {
+      allow get: if isSignedIn() && isValidId(logId) && existing().ownerId == request.auth.uid;
+      allow list: if isSignedIn() && resource.data.ownerId == request.auth.uid;
+
+      allow create: if isVerifiedUser() 
+        && isValidId(logId) 
+        && isValidLog(incoming()) 
+        && incoming().createdAt == request.time;
+
+      // Activity logs are immutable - update is strictly disabled
+      allow update: if false;
+
+      allow delete: if isVerifiedUser() && isValidId(logId) && existing().ownerId == request.auth.uid;
+    }
+  }
+}
