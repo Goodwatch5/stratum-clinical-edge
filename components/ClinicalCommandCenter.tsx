@@ -37,6 +37,7 @@ import {
   HardDrive,
   Lock,
   Sun,
+  HeartPulse,
 } from "lucide-react";
 import KingdomIntelligenceCore from "@/components/KingdomIntelligenceCore";
 import { Stronghold } from "@/app/page";
