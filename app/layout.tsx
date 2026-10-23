@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import PWAInstallBanner from "@/components/PWAInstallBanner";
 import { SpeedInsights } from "@vercel/speed-insights/next";
+import { Analytics } from "@vercel/analytics/next";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -58,6 +59,7 @@ export default function RootLayout({
         <PWAInstallBanner />
         {children}
         <SpeedInsights />
+        <Analytics />
       </body>
     </html>
   );
